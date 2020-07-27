@@ -14,12 +14,12 @@ public class DisplayMessageActivity extends AppCompatActivity {
         setContentView(R.layout.activity_display_message);
 
         // Get the Intent that started this activity and extract the string
-        Intent intent = getIntent();
-        String message = intent.getStringExtra(MainActivity.EXTRA_MESSAGE);
+        final  Intent intent = getIntent();
+        final String message = intent.getStringExtra(MainActivity.EXTRA_MESSAGE);
 
         // Capture the layout's TextView and set the string as its text
-        TextView textView = findViewById(R.id.message2);
-        if(textView!=null) textView.setText(message);
+        TextView textView = findViewById(R.id.editTextTextPersonName2);
+        if(textView!=null && message!=null) textView.setText(message);
     }
 
 }
