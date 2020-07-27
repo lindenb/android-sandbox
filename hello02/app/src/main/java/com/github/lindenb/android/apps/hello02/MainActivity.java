@@ -17,6 +17,13 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
     }
 
+
+    public void  openGrid(final View view) {
+        final  Intent intent = new Intent(MainActivity.this, DrawingGridActivity.class);
+            startActivity(intent);
+        
+    }
+
    public void  sendMessage(final View view) {
       final  Intent intent = new Intent(MainActivity.this, DisplayMessageActivity.class);
       final View editText = (View)findViewById(R.id.editTextTextPersonName);
