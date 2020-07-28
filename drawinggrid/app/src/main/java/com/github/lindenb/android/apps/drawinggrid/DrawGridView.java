@@ -30,24 +30,23 @@ public class DrawGridView extends View {
         int imgWidth = this.bitmap.getWidth();
         int imgHeight = this.bitmap.getHeight();
         if(imgWidth==0 || imgWidth==0 || panelWidth==0 || panelHeight==0) return null;
-        Matrix tr= new Matrix();
+        final Matrix tr= new Matrix();
 
-        /*
+
         if( isPortrait(panelWidth, panelHeight) != isPortrait(imgWidth,imgHeight)) {
-            tr.postTranslate(imgHeight, 0);
-            tr.postRotate((float)(Math.PI/2));
+            tr.postTranslate(-imgWidth/2f,-imgHeight/2f);
+            tr.postRotate(90);
+            tr.postTranslate(imgHeight/2f,imgWidth/2f);
             int tmp = imgHeight;
             imgHeight = imgWidth;
             imgWidth = tmp;
-        }*/
+            }
 
         if(imgWidth!= panelWidth || imgHeight!=panelHeight) {
             final double r1 = (double)panelWidth/imgWidth;
             final double r2 = (double)panelHeight/imgHeight;
             final double r = Math.min(r1, r2);
-            final Matrix tr2 = new Matrix();
-            tr2.postScale((float)r, (float)r);
-            tr=tr2;
+            tr.postScale((float)r, (float)r);
             imgWidth = (int)(imgWidth*r);
             imgHeight =(int)(imgHeight*r);
         }
