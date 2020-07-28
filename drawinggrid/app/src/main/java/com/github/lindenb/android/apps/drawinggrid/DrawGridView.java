@@ -10,6 +10,7 @@ import android.graphics.Rect;
 import android.view.View;
 
 public class DrawGridView extends View {
+    private final static String TAG="DrawGridView";
     private boolean squareGrid=false;
     private int numDiv = 8;
     private Bitmap bitmap = null;
@@ -31,21 +32,21 @@ public class DrawGridView extends View {
         if(imgWidth==0 || imgWidth==0 || panelWidth==0 || panelHeight==0) return null;
         Matrix tr= new Matrix();
 
+        /*
         if( isPortrait(panelWidth, panelHeight) != isPortrait(imgWidth,imgHeight)) {
             tr.postTranslate(imgHeight, 0);
             tr.postRotate((float)(Math.PI/2));
             int tmp = imgHeight;
             imgHeight = imgWidth;
             imgWidth = tmp;
-        }
+        }*/
 
         if(imgWidth!= panelWidth || imgHeight!=panelHeight) {
             final double r1 = (double)panelWidth/imgWidth;
             final double r2 = (double)panelHeight/imgHeight;
             final double r = Math.min(r1, r2);
             final Matrix tr2 = new Matrix();
-            tr2.postTranslate((float)r, (float)r);
-            tr2.postConcat(tr);
+            tr2.postScale((float)r, (float)r);
             tr=tr2;
             imgWidth = (int)(imgWidth*r);
             imgHeight =(int)(imgHeight*r);
@@ -53,11 +54,7 @@ public class DrawGridView extends View {
 
         final int dx=(panelWidth-imgWidth)/2;
         final int dy=(panelHeight-imgHeight)/2;
-        final Matrix tr3 = new Matrix();
-        tr3.postTranslate(dx,dy);
-        ;
-        tr3.postConcat(tr);
-        tr=tr3;
+        tr.postTranslate(dx,dy);
         return tr;
     }
 
@@ -78,7 +75,7 @@ public class DrawGridView extends View {
         boolean needRotate = false;
 
         if(this.bitmap!=null) {
-            Matrix matrix = getMatrix();
+            Matrix matrix = getTransform();
             if(matrix!=null) canvas.drawBitmap(this.bitmap,matrix,paint);
         }
 
