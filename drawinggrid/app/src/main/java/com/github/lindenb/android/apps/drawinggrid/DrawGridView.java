@@ -7,6 +7,7 @@ import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Rect;
+import android.graphics.RectF;
 import android.view.View;
 
 public class DrawGridView extends View {
@@ -29,7 +30,7 @@ public class DrawGridView extends View {
         int panelHeight = this.getHeight();
         int imgWidth = this.bitmap.getWidth();
         int imgHeight = this.bitmap.getHeight();
-        if(imgWidth==0 || imgWidth==0 || panelWidth==0 || panelHeight==0) return null;
+        if(imgWidth==0 || imgHeight==0 || panelWidth==0 || panelHeight==0) return null;
         final Matrix tr= new Matrix();
 
 
@@ -67,21 +68,24 @@ public class DrawGridView extends View {
         paint.setColor(this.bitmap==null?Color.DKGRAY:Color.LTGRAY);
         canvas.drawRect(0, 0, getWidth(), getHeight(), paint);
 
-
-
-        Rect bounds = new Rect(0,0,getWidth(),getHeight());
-
-        boolean needRotate = false;
+        Matrix matrix = getTransform();
+        if(matrix==null) return;
 
         if(this.bitmap!=null) {
-            Matrix matrix = getTransform();
-            if(matrix!=null) canvas.drawBitmap(this.bitmap,matrix,paint);
+            canvas.drawBitmap(this.bitmap,matrix,paint);
         }
 
 
         if (numDiv > 0) {
-            float dw = bounds.width() / (float) numDiv;
-            float dh = bounds.height() / (float) numDiv;
+            //canvas.save();
+            //canvas.setMatrix(matrix);
+
+            //paint.setColor(Color.GREEN);
+            RectF rect= new RectF(0f,0f,bitmap.getWidth(),bitmap.getHeight());
+            matrix.mapRect(rect);
+
+            float dw = rect.width() / (float) numDiv;
+            float dh = rect.width() / (float) numDiv;
             if (this.squareGrid) {
                 dw = Math.min(dw, dh);
                 dh = dw;
@@ -90,10 +94,10 @@ public class DrawGridView extends View {
 
 
             int i=1;
-            float p = bounds.left  + dw;
-            while(p < bounds.right) {
+            float p = rect.left+dw;
+            while(p < rect.right) {
                 if(i%2==0) {
-                    paint.setStrokeWidth(2f);
+                    paint.setStrokeWidth(1f);
                     paint.setColor(Color.RED);
                 }
                 else
@@ -101,27 +105,28 @@ public class DrawGridView extends View {
                     paint.setStrokeWidth(1f);
                     paint.setColor(Color.BLUE);
                 }
-                canvas.drawLine(p, bounds.top,p, bounds.bottom,paint);
+                canvas.drawLine(p, rect.top,p,rect.bottom,paint);
                 p+= dw;
                 i++;
             }
 
             i=1;
-            p= bounds.top + dh;
-            while(p < bounds.bottom) {
+            p= rect.top + dh;
+            while(p < rect.bottom) {
                 if(i%2==0) {
-                    paint.setStrokeWidth(2f);
+                    paint.setStrokeWidth(1f);
                     paint.setColor(Color.RED);
                 }
                 else
                 {
-                    paint.setStrokeWidth(1);
+                    paint.setStrokeWidth(1f);
                     paint.setColor(Color.BLUE);
                 }
-                canvas.drawLine(bounds.left , p, bounds.right,p,paint);
+                canvas.drawLine(rect.left, p, rect.right,p,paint);
                 p+= dh;
                 i++;
             }
+            //canvas.restore();
         }
     }
 
