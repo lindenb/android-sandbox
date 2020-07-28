@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">DrawingGrid</string>
+    <string name="selectImage">Select Image...</string>
+    <string name="cboxSquare">Square</string>
 </resources>
