@@ -41,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
         final SeekBar gridCountSeekBar = findViewById(R.id.gridCount);
-        gridCountSeekBar.setMax(20);
+        gridCountSeekBar.setMax(12);
         gridCountSeekBar.setProgress(8);
         gridCountSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
 

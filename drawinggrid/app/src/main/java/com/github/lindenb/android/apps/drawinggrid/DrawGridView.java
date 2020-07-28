@@ -6,13 +6,12 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.Paint;
-import android.graphics.Rect;
 import android.graphics.RectF;
 import android.view.View;
 
 public class DrawGridView extends View {
     private final static String TAG="DrawGridView";
-    private boolean squareGrid=false;
+    private boolean squareGrid=true;
     private int numDiv = 8;
     private Bitmap bitmap = null;
 
@@ -77,10 +76,10 @@ public class DrawGridView extends View {
 
 
         if (numDiv > 0) {
-            //canvas.save();
-            //canvas.setMatrix(matrix);
+            final int old_alpha = paint.getAlpha();
+            paint.setAlpha(160);
 
-            //paint.setColor(Color.GREEN);
+
             RectF rect= new RectF(0f,0f,bitmap.getWidth(),bitmap.getHeight());
             matrix.mapRect(rect);
 
@@ -126,7 +125,7 @@ public class DrawGridView extends View {
                 p+= dh;
                 i++;
             }
-            //canvas.restore();
+            paint.setAlpha(old_alpha);
         }
     }
 
