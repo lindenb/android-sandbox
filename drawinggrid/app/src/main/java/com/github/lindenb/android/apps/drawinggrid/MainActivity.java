@@ -17,6 +17,8 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.SeekBar;
 
+import java.io.InputStream;
+
 public class MainActivity extends AppCompatActivity {
     private final static int PICK_IMAGE=101;
     private final static String TAG="MainActivity";
@@ -85,25 +87,27 @@ public class MainActivity extends AppCompatActivity {
                 final Uri pickedImage = data.getData();
                 if(pickedImage!=null) {
 
-                    Log.d(TAG,"PickImage is not null");
-                    final String[] filePath = {MediaStore.Images.Media.DATA};
-                    Cursor cursor = null;
-                    try {
-                        cursor = getContentResolver().query(pickedImage, filePath, null, null, null);
-                        if (cursor != null && cursor.moveToFirst()) {
-                            final String imagePath = cursor.getString(cursor.getColumnIndex(filePath[0]));
-                            Log.d(TAG,"imagePath:"+imagePath);
-                            BitmapFactory.Options options = new BitmapFactory.Options();
-                            options.inPreferredConfig = Bitmap.Config.ARGB_8888;
-                            final Bitmap bitmap = BitmapFactory.decodeFile(imagePath, options);
+                    Log.d(TAG,"PickImage is " + pickedImage);
+
+                    InputStream is =null;
+                    try
+                    {
+                        is = getContentResolver().openInputStream(pickedImage);
+                        if(is!=null) {
+                            Log.d(TAG,"Got inputstream");
+                            final Bitmap bitmap = BitmapFactory.decodeStream(is);
+                            is.close();
+                            is=null;
                             Log.d(TAG,"Update bit map:"+(bitmap==null?"null":"ok"));
                             getDrawingArea().setBitmap(bitmap);
                         }
-
-                    } catch (final Throwable err) {
-                        Log.d(TAG, "Cannot read image",err);
-                    } finally {
-                        if (cursor != null) cursor.close();
+                    }
+                    catch(Throwable err ) {
+                        Log.d(TAG,"cannot open",err);
+                    }
+                    finally
+                    {
+                        if(is!=null)  try{is.close();}catch(Throwable err2) {}
                     }
                 }
 
