@@ -30,8 +30,6 @@ public class MainActivity extends AppCompatActivity {
         // https://stackoverflow.com/questions/36236181
         try { this.getSupportActionBar().hide(); }  catch (Throwable e){   Log.w(TAG,e);  }
 
-        final Button buttonOpenImage = findViewById(R.id.selFileButton);
-
         final CheckBox cboxSquare = findViewById(R.id.squareCbox);
         cboxSquare.setOnCheckedChangeListener( new CheckBox.OnCheckedChangeListener() {
             @Override
@@ -40,37 +38,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        final SeekBar gridCountSeekBar = findViewById(R.id.gridCount);
-        gridCountSeekBar.setMax(12);
-        gridCountSeekBar.setProgress(8);
-        gridCountSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-
-            @Override
-            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                getDrawingArea().setNumDiv(progress);
-            }
-
-            @Override
-            public void onStartTrackingTouch(SeekBar seekBar) {
-            }
-
-            @Override
-            public void onStopTrackingTouch(SeekBar seekBar) {
-            }
-        });
-
-
-
-        // recovering the instance state
-        if (savedInstanceState != null) {
-
-        }
-
-    }
-
-    @Override
-    public void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
     }
 
 
@@ -125,8 +92,18 @@ public class MainActivity extends AppCompatActivity {
         final Intent intent = new Intent();
         intent.setType("image/*");
         intent.setAction(Intent.ACTION_GET_CONTENT);
-        startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE);
+        startActivityForResult(Intent.createChooser(intent, "Select Picture..."), PICK_IMAGE);
     }
 
-
+    private void changeDiv(final View view,int dx) {
+        final int d = getDrawingArea().getNumDiv() + dx;
+        if(d<0 || d>100) return;
+        getDrawingArea().setNumDiv(d);
+    }
+    public void doIncreaseDiv(final View view) {
+        changeDiv(view,1);
+    }
+    public void doDecreaseDiv(final View view) {
+        changeDiv(view,-1);
+    }
 }

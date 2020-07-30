@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">DownloadIG</string>
+    <string name="button_open">Open...</string>
+    <string name="button_save">Save...</string>
+    <string name="testURL"></string>
+    <string name="hintURL">URL...</string>
+</resources>

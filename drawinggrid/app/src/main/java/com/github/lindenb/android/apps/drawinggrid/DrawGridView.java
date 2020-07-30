@@ -129,6 +129,10 @@ public class DrawGridView extends View {
         }
     }
 
+    int getNumDiv() {
+        return numDiv;
+    }
+
     void setNumDiv(int numDiv) {
         if(numDiv==this.numDiv) return;
         this.numDiv = numDiv;

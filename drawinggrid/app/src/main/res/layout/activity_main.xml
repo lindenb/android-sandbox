@@ -15,36 +15,38 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:orientation="horizontal"
-        android:weightSum="10"
-
-        >
+        android:orientation="horizontal">
 
         <Button
             android:id="@+id/selFileButton"
+            style="@style/Widget.AppCompat.Button.Borderless"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_weight="1"
+            android:baselineAligned="false"
             android:onClick="chooseImage"
             android:text="@string/selectImage" />
 
         <CheckBox
             android:id="@+id/squareCbox"
+            style="@android:style/Widget.DeviceDefault.CompoundButton.CheckBox"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_weight="1"
             android:checked="true"
             android:text="@string/cboxSquare" />
 
-        <SeekBar
-            android:id="@+id/gridCount"
-            android:layout_width="match_parent"
+        <Button
+            style="@style/Widget.AppCompat.Button.Borderless"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_weight="8"
-            android:max="12"
-            android:min="0"
-            android:progress="8" />
+            android:onClick="doDecreaseDiv"
+            android:text="@string/butMinus" />
 
+        <Button
+            style="@style/Widget.AppCompat.Button.Borderless"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:onClick="doIncreaseDiv"
+            android:text="@string/butPlus" />
     </LinearLayout>
 
     <LinearLayout
